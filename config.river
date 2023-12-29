@@ -1,0 +1,27 @@
+prometheus.exporter.windows "default" {
+  enabled_collectors = [
+    "cpu",
+    "cs",
+    "logical_disk",
+    "net",
+    "os",
+    "service",
+    "system",
+    "memory",
+    "iis",
+    "mssql",
+  ]
+}
+prometheus.scrape "example" {
+  targets    = prometheus.exporter.windows.default.targets
+  forward_to = [prometheus.remote_write.demo.receiver]
+}
+ 
+prometheus.remote_write "demo" {
+  endpoint {
+    url = "http://localhost:9090/api/v1/push"
+ 
+   
+  }
+}
+
